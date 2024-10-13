@@ -19,7 +19,7 @@ function Profile() {
             if (!userId) {
                 throw new Error('User ID not found in sessionStorage');
             }
-            const response = await fetch(`https://expensestracker-2.onrender.com/profile/${userId}`);
+            const response = await fetch(`http://localhost:3001/profile/${userId}`);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch user profile');
