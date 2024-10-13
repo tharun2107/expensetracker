@@ -22,7 +22,7 @@ const ExpensesList = () => {
                 }
 
                 // Constructing the URL with filter parameters
-                let url = `https://expensestracker-2.onrender.com/expenses?userId=${userId}`;
+                let url = `http://localhost:3001/expenses?userId=${userId}`;
                 if (filterType) {
                     url += `&type=${filterType}`;
                 }
@@ -59,7 +59,7 @@ const ExpensesList = () => {
     const handleSave = async (id) => {
         try {
             const expenseToUpdate = expenses.find((expense) => expense._id === id);
-            await axios.put(`https://expensestracker-2.onrender.com/expenses/${id}`, expenseToUpdate);
+            await axios.put(`http://localhost:3001/expenses/${id}`, expenseToUpdate);
             setEditMode({ id: null, field: null });
         } catch (error) {
             console.error('Error updating expense:', error);
@@ -69,7 +69,7 @@ const ExpensesList = () => {
     // Function to handle deleting an expense
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://expensestracker-2.onrender.com/expenses/${id}`);
+            await axios.delete(`http://localhost:3001/expenses/${id}`);
             const updatedExpenses = expenses.filter((expense) => expense._id !== id);
             setExpenses(updatedExpenses);
         } catch (error) {

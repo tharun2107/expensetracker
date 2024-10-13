@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://expensestracker-2.onrender.com/usersignup', { username, email, password });
+      const response = await axios.post('http://localhost:3001/usersignup', { username, email, password });
       if (response.status === 200) {
         // Redirect to the login page upon successful signup
         window.location.href = '/userlogin';

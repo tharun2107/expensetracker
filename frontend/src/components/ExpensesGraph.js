@@ -33,7 +33,7 @@ const ExpensesGraph = () => {
                     throw new Error('User ID not found in sessionStorage');
                 }
 
-                let url = `https://expensestracker-2.onrender.com/expenses?userId=${userId}`;
+                let url = `http://localhost:3001/expenses?userId=${userId}`;
                 if (filterMonth && filterYear) {
                     url += `&month=${filterMonth}&year=${filterYear}`;
                 }
