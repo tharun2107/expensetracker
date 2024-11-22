@@ -56,13 +56,13 @@ Follow these steps to set up the project locally:
 
 3. Install backend dependencies:
    ```bash
-   cd server
+   cd backend
    npm install
    ```
 
 4. Install frontend dependencies:
    ```bash
-   cd client
+   cd frontend
    npm install
    ```
 
