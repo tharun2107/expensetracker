@@ -10,9 +10,8 @@ This project is designed to help individuals keep an eye on their spending habit
 
 ## Key Features
 
-- **User Authentication**: Sign up and log in using JWT authentication.
+- **User Authentication**: Sign up and log in track expenses.
 - **Expense Management**: Add, edit, and delete expenses.
-- **Categories**: Organize expenses by categories such as food, transportation, bills, etc.
 - **Expense Filtering**: Filter expenses by date and category.
 - **Data Visualization**: View expense trends with graphical charts.
 - **Export Options**: Download the expense data as a PDF or Excel file.
@@ -30,8 +29,6 @@ This project is designed to help individuals keep an eye on their spending habit
   - Node.js
   - Express.js
   - MongoDB
-  - JSON Web Tokens (JWT) for user authentication
-  - Multer (for file upload functionality)
 
 - **Tools & Libraries**:
   - Bootstrap (for responsive design)
