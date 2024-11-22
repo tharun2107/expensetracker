@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import expensesListImage from './image5.jpeg'; // Importing an example image
 import './expense.css';
 import * as XLSX from 'xlsx';
+
 const ExpensesList = () => {
     const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,6 +14,7 @@ const ExpensesList = () => {
     const [filterYear, setFilterYear] = useState('');
     const [editMode, setEditMode] = useState({ id: null, field: null });
 
+    // Fetch expenses when filters change
     useEffect(() => {
         const fetchExpenses = async () => {
             try {
@@ -23,11 +25,16 @@ const ExpensesList = () => {
 
                 // Constructing the URL with filter parameters
                 let url = `http://localhost:3001/expenses?userId=${userId}`;
+
+                // Add filters to URL if they are set
                 if (filterType) {
                     url += `&type=${filterType}`;
                 }
-                if (filterMonth && filterYear) {
-                    url += `&month=${filterMonth}&year=${filterYear}`;
+                if (filterMonth) {
+                    url += `&month=${filterMonth}`;
+                }
+                if (filterYear) {
+                    url += `&year=${filterYear}`; // Ensure the year is correctly included
                 }
 
                 const response = await axios.get(url);
@@ -40,7 +47,7 @@ const ExpensesList = () => {
         };
 
         fetchExpenses();
-    }, [filterType, filterMonth, filterYear]); // Trigger effect when filter options change
+    }, [filterType, filterMonth, filterYear]); // Trigger effect when any filter changes
 
     // Function to handle updating an expense
     const handleUpdate = (expense) => {
@@ -76,7 +83,8 @@ const ExpensesList = () => {
             console.error('Error deleting expense:', error);
         }
     };
-    // function to download in excel format
+
+    // Function to download in excel format
     const handleDownload = () => {
         // Exclude the _id field from each expense object
         const expensesWithoutId = expenses.map(({ _id, ...rest }) => rest);
@@ -87,14 +95,13 @@ const ExpensesList = () => {
         XLSX.writeFile(workbook, 'expenses.xlsx');
     };
 
-
     // Calculate total income and expenses for the selected month
     const totalIncome = expenses
-        .filter((expense) => expense.type === 'income' && (!filterMonth || !filterYear || expense.date.includes(`${filterYear}-${filterMonth}`)))
+        .filter((expense) => expense.type === 'income')
         .reduce((total, expense) => total + parseFloat(expense.amount), 0);
 
     const totalExpenses = expenses
-        .filter((expense) => expense.type === 'expense' && (!filterMonth || !filterYear || expense.date.includes(`${filterYear}-${filterMonth}`)))
+        .filter((expense) => expense.type === 'expense')
         .reduce((total, expense) => total + parseFloat(expense.amount), 0);
 
     // Function to generate options for years
@@ -106,6 +113,7 @@ const ExpensesList = () => {
         }
         return years;
     };
+
     return (
         <div>
             <Navbar />
@@ -148,7 +156,6 @@ const ExpensesList = () => {
                                             <div className="col-md-4">
                                                 <select className="form-control" value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
                                                     <option value="">All Years</option>
-                                                    {/* Add options for years */}
                                                     {generateYearOptions()}
                                                 </select>
                                             </div>
@@ -162,11 +169,11 @@ const ExpensesList = () => {
                                         <table className="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th >Amount</th>
+                                                    <th>Amount</th>
                                                     <th>Description</th>
                                                     <th>Type</th>
                                                     <th>Date</th>
-                                                    <th>Actions</th> {/* Add Actions column */}
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -223,39 +230,16 @@ const ExpensesList = () => {
                                                                     onChange={(e) => handleInputChange(e, expense._id)}
                                                                 />
                                                             ) : (
-                                                                new Date(expense.date).toLocaleDateString()
+                                                                new Date(expense.date).toLocaleDateString('en-GB') 
                                                             )}
                                                         </td>
                                                         <td>
-                                                            {editMode.id === expense._id ? (
-                                                                <>
-                                                                    <button
-                                                                        className="btn btn-sm btn-success me-2"
-                                                                        onClick={() => handleSave(expense._id)}
-                                                                    >
-                                                                        Save
-                                                                    </button>
-                                                                    <button
-                                                                        className="btn btn-sm btn-secondary"
-                                                                        onClick={() => setEditMode({ id: null, field: null })}
-                                                                    >
-                                                                        Cancel
-                                                                    </button>
-                                                                </>
+                                                            {editMode.id === expense._id && editMode.field === 'all' ? (
+                                                                <button className="btn btn-primary" onClick={() => handleSave(expense._id)}>Save</button>
                                                             ) : (
                                                                 <>
-                                                                    <button
-                                                                        className="btn btn-sm btn-primary me-2"
-                                                                        onClick={() => handleUpdate(expense)}
-                                                                    >
-                                                                        Update
-                                                                    </button>
-                                                                    <button
-                                                                        className="btn btn-sm btn-danger"
-                                                                        onClick={() => handleDelete(expense._id)}
-                                                                    >
-                                                                        Delete
-                                                                    </button>
+                                                                    <button className="btn btn-warning m-1" onClick={() => handleUpdate(expense)}>Edit</button>
+                                                                    <button className="btn btn-danger" onClick={() => handleDelete(expense._id)}>Delete</button>
                                                                 </>
                                                             )}
                                                         </td>
@@ -264,22 +248,18 @@ const ExpensesList = () => {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button className="btn btn-outline-success mt-3" onClick={handleDownload}>
-                                        Download as Excel
-                                    </button>
+                                    <button className="btn btn-success" onClick={handleDownload}>Download Excel</button>
                                 </>
                             )}
                         </div>
                     </div>
                     <div className="col-md-4">
-                        {/* Example image */}
-                        <img src={expensesListImage} className="img-fluid" alt="Expenses List" />
+                        <img src={expensesListImage} alt="Expenses" className="img-fluid" />
                     </div>
                 </div>
             </div>
         </div>
     );
-
 };
 
 export default ExpensesList;
