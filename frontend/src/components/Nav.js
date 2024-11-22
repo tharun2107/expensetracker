@@ -21,18 +21,7 @@ function Nav() {
         </button>
         <div className={`${showLinks ? 'show' : ''} collapse navbar-collapse justify-content-center`} id="navbarNav">
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/home">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/recordexpense">Record Expense</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/expenses">Expenses</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/expensesgraph">Graph</Link>
-            </li>
+
             <li className="nav-item">
               <Link className="nav-link" to="/userlogin">Login</Link>
             </li>
