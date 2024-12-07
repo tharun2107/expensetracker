@@ -11,7 +11,7 @@ const uri = process.env.MONGO_URL
 app.use(express.json());
 app.use(
     cors({
-        origin: 'http://localhost:3000', // Replace with your frontend's URL in production
+        origin: 'https://exptrackerrr.netlify.app/', // Replace with your frontend's URL in production
         methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
         credentials: true, // Include cookies in cross-origin requests, if needed
     })
