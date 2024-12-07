@@ -24,7 +24,7 @@ const RecordEntryForm = () => {
             }
 
             const newEntry = { userId, type, date, description, amount: amount.toString() };
-            const response = await axios.post('http://localhost:3001/recordexpense', newEntry);
+            const response = await axios.post('https://expensetracker-hmlp.onrender.com/recordexpense', newEntry);
             setMessage(response.data.message);
         } catch (error) {
             console.error('Error adding expense:', error);

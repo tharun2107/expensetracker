@@ -9,7 +9,13 @@ require('dotenv').config()
 const app = express();
 const uri = process.env.MONGO_URL
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:3000', // Replace with your frontend's URL in production
+        methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+        credentials: true, // Include cookies in cross-origin requests, if needed
+    })
+);
 app.use(morgan('dev'));
 
 mongoose.connect(uri)
