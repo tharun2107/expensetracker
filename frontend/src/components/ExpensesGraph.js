@@ -33,7 +33,7 @@
                         throw new Error('User ID not found in sessionStorage');
                     }
 
-                    let url = `http://localhost:3001/expenses?userId=${userId}`;
+                    let url = `https://expensetracker-hmlp.onrender.com/expenses?userId=${userId}`;
                     if (filterMonth && filterYear) {
                         url += `&month=${filterMonth}&year=${filterYear}`;
                     }

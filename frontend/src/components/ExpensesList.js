@@ -24,7 +24,7 @@ const ExpensesList = () => {
                 }
 
                 // Constructing the URL with filter parameters
-                let url = `http://localhost:3001/expenses?userId=${userId}`;
+                let url = `https://expensetracker-hmlp.onrender.com/expenses?userId=${userId}`;
 
                 // Add filters to URL if they are set
                 if (filterType) {
@@ -66,7 +66,7 @@ const ExpensesList = () => {
     const handleSave = async (id) => {
         try {
             const expenseToUpdate = expenses.find((expense) => expense._id === id);
-            await axios.put(`http://localhost:3001/expenses/${id}`, expenseToUpdate);
+            await axios.put(`https://expensetracker-hmlp.onrender.com/expenses/${id}`, expenseToUpdate);
             setEditMode({ id: null, field: null });
         } catch (error) {
             console.error('Error updating expense:', error);
@@ -76,7 +76,7 @@ const ExpensesList = () => {
     // Function to handle deleting an expense
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/expenses/${id}`);
+            await axios.delete(`https://expensetracker-hmlp.onrender.com/expenses/${id}`);
             const updatedExpenses = expenses.filter((expense) => expense._id !== id);
             setExpenses(updatedExpenses);
         } catch (error) {
